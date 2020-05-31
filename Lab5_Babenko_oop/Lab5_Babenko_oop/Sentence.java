@@ -4,6 +4,11 @@ package Lab5_Babenko_oop;
 public class Sentence {
     //батьківський клас
 
+    //creating regex for punctuation
+    //word or punctuation
+    //static не буде створюватися для кожного екземпляру класу окремо
+    private static final String punctuationSymbols = ",.!?;";
+
     private SentenceElement[] sentenceElements;
 
     /**
@@ -14,6 +19,26 @@ public class Sentence {
     public Sentence(SentenceElement[] sentenceElements) {
         this.sentenceElements = sentenceElements;
     }
+
+    public Sentence(String sentenceString){
+        // delimiters
+        // підстановка punctuationSymbols
+        String [] sentenceElementsStrings = sentenceString.split("(?=[" + punctuationSymbols + "])|\\s");
+        // creating array for сентенс елементів
+        sentenceElements = new SentenceElement[sentenceElementsStrings.length];
+
+        // проходимо по елементам
+        String sentenceElementString;
+        for (int i = 0; i < sentenceElementsStrings.length; i++) {
+            sentenceElementString = sentenceElementsStrings[i];
+            sentenceElements[i] = punctuationSymbols.contains(sentenceElementsStrings[i])
+                    //
+                    ? new Punctuation(sentenceElementString)
+                    : new Word(sentenceElementString);
+        }
+    }
+
+
 
     /**
      * @return Sentence
@@ -54,7 +79,9 @@ public class Sentence {
  */
         for (SentenceElement sentenceElement : sentenceElements) {
             if (sentenceElement instanceof Word) {
-                if (sentenceElement.toString().equals(wordString)) {
+//                if (sentenceElement.toString().equals(wordString)) {
+                Word word = (Word) sentenceElement;
+                if (word.equalsString(wordString)) {
                     wordEntrancesQuantity++;
                 }
             }
