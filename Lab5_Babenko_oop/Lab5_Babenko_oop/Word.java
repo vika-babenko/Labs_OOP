@@ -13,6 +13,14 @@ public class Word extends SentenceElement {
         this.letters = letters;
     }
 
+    public Word(String wordString) {
+        char[] lettersChars = wordString.toCharArray();
+        letters = new Letter[lettersChars.length];
+        for (int i = 0; i < lettersChars.length; i++) {
+            letters[i] = new Letter(lettersChars[i]);
+        }
+    }
+
     // creating for output Word
     // return our word
     @Override
@@ -28,5 +36,11 @@ public class Word extends SentenceElement {
         }
         return wordString.toString();
      }
+
+
+     //creating method for returning result of entrance
+    public boolean equalsString(String wordString) {
+        return toString().equals(wordString);
+    }
 }
 
