@@ -1,5 +1,3 @@
-package Lab5_Babenko_oop;
-
 public class Punctuation extends SentenceElement {
     /**
      *створення полів
