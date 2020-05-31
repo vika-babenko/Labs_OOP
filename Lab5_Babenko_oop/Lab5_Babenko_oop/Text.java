@@ -14,6 +14,22 @@ public class Text {
         this.sentences = sentences;
     }
 
+
+    // перевантаження конструктора + creating екземпляру класу тексту як строки
+    //delimiters: . !?
+    public Text(String textString) {
+        /*
+        за допомогою регулярного виразу розділяємо стрінг з текстом
+        ?<= позитивний перегляд назад для збереження делімітера в поверненні тексту
+        зникає пробіл на початку наступного речення
+        */
+        String[] sentencesStrings = textString.split("(?<=[?!.]) ");
+        sentences = new Sentence[sentencesStrings.length];
+        for (int i = 0; i < sentencesStrings.length; i++) {
+            sentences[i] = new Sentence(sentencesStrings[i]);
+        }
+    }
+
     //повертає текст
     @Override
     public String toString() {
