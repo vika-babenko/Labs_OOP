@@ -29,6 +29,42 @@ public class Bouquet {
         //для кожної квітки використовується свіжість як критерій сортування
         flowersList.sort(Comparator.comparing(Flower::getFreshness));
         System.out.println(flowersList);
-        
+    }
+
+    // метод для получения цветов в заданном ценовом диапазоне, вернет массив
+    public BouquetComponent[] getFlowersInRange(double from, double to)
+    {
+        // так как мы не знаем, сколько цветов попадает в данный диапазон, найдем их кол-во, чтоб создать массив
+        BouquetComponent[] flowersInRange = new BouquetComponent[getAmountOfFlowersInRange(from, to)];
+        // index это текущий индекс массива с подоходящими цветами
+        int index = 0;
+        for (int i = 0; i < this.bouquetComponents.length; i++) {
+            // проверяем, если текущий компонент ИМЕННО цветок, а не другая сущность
+            if(this.bouquetComponents[i] instanceof Flower) {
+                if(this.bouquetComponents[i].getLength() > from && this.bouquetComponents[i].getLength() < to) {
+                    // если цветок подходит, добавляем массив, увеличиваем на 1 наш индекс,
+                    // если использовать не index, a i, то выйдем за пределы массива
+                    flowersInRange[index] = this.bouquetComponents[i];
+                    index++;
+                }
+            }
+        }
+        return flowersInRange;
+    }
+
+    // вернет кол-во цветов в заданном диапазоне
+    private int getAmountOfFlowersInRange(double from, double to)
+    {
+        // кол-во цветов
+        int counter = 0;
+        // если цена цветка в диапазоне, увеличиваем счетчик
+        for (int i = 0; i < this.bouquetComponents.length; i++) {
+            if(this.bouquetComponents[i] instanceof Flower) {
+                if (this.bouquetComponents[i].getLength() > from && this.bouquetComponents[i].getLength() < to) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
     }
 }
